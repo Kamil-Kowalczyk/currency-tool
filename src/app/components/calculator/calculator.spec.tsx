@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import RatesPage from './rates-page';
+import Calculator from './calculator';
 
-describe('RatesPage', () => {
+describe('CalculatorPage', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<RatesPage />);
+    const { baseElement } = render(<Calculator />);
     expect(baseElement).toBeTruthy();
   });
 });

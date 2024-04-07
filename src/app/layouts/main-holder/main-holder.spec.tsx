@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import CalculatorPage from './calculator-page';
+import MainHolder from './main-holder';
 
-describe('CalculatorPage', () => {
+describe('MainHolder', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<CalculatorPage />);
+    const { baseElement } = render(<MainHolder />);
     expect(baseElement).toBeTruthy();
   });
 });

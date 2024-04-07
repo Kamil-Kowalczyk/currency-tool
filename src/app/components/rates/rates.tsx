@@ -1,9 +1,9 @@
-import styles from './rates-page.module.scss';
+import styles from './rates.module.scss';
 
-import { useCurrencyContext } from "./../../contexts/currency-data-context/currency-data-context";
+import { useCurrencyContext } from "../../contexts/currency-data-context/currency-data-context";
 import { Currency } from '../../contexts/currency-data-context/models/currency-model';
 
-interface TableBodyParams {
+interface TableBodyProps {
   data: Currency[]
 }
 
@@ -21,7 +21,7 @@ function TableHead() {
 
 
 
-function TableBody({data}: TableBodyParams) {
+function TableBody({data}: TableBodyProps) {
     return (
         <tbody className="table-dark">
             {/* todo: images for currencies */}
@@ -42,13 +42,13 @@ function TableBody({data}: TableBodyParams) {
 }
 
 function Table() {
-    const currenciesTable: Currency[] = useCurrencyContext();
+    const currencyTable: Currency[] = useCurrencyContext();
     
-    return currenciesTable.length > 0 ? (
+    return currencyTable.length > 0 ? (
         <div>
             <table className={`table mb-0 ${styles.currencyTable}`}>
                 <TableHead />
-                <TableBody data={currenciesTable} />
+                <TableBody data={currencyTable} />
             </table>
         </div>
     ) : (
@@ -62,7 +62,7 @@ function Header() {
     return <h2 className="text-center m-4">Kursy walut</h2>;
 }
 
-export function RatesPage() {
+export function Rates() {
     return (
         <div className="col-8 mx-auto">
             <Header />
@@ -71,4 +71,4 @@ export function RatesPage() {
     );
 }
 
-export default RatesPage
+export default Rates

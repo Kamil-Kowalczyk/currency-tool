@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import HomePage from './home-page';
+import Navbar from './navbar';
 
-describe('HomePage', () => {
+describe('Navbar', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<HomePage />);
+    const { baseElement } = render(<Navbar />);
     expect(baseElement).toBeTruthy();
   });
 });
