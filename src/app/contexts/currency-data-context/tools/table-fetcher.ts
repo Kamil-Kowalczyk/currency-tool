@@ -6,16 +6,16 @@ export const fetchTable = () => {
             .then(data => {
                 var processedData: Currency[] = [{
                     code: 'PLN',
-                    name: "złoty polski",
+                    name: 'złoty polski',
                     rate: 1,
-                    imageSrc: ''
+                    imageSrc: 'src/assets/country-icons/png/pln.png'
                 }]
                 data[0]['rates'].forEach((row: { [x: string]: any; }) => {
                     processedData.push({
                         code: row['code'], 
                         name: row['currency'], 
-                        rate: row['mid'], 
-                        imageSrc: row['code'].toLowerCase() + '.png'
+                        rate: row['mid'],
+                        imageSrc: `src/assets/country-icons/png/${row['code'].toLowerCase()}.png`
                     })
                 });
                 processedData.pop()
