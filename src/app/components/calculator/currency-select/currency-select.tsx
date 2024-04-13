@@ -50,11 +50,11 @@ const selectStyles: StylesConfig<SelectOption> = {
 const selectOptionLabel = (option: SelectOption) => (
   <div className='d-flex h-100'>
     <div className='d-inline-flex my-auto w-100 justify-content-left'>
-      <img className={`${styles.image} ms-1 me-1 my-auto`} 
+      <img className={`${styles.image} my-auto ms-1 me-1`} 
         src={option.currency.imageSrc} 
         alt={`${option.currency.code.toLowerCase()}.png`}
       />
-      <p className='my-auto text-white' style={{width: '3rem'}}>{option.currency.code}</p>
+      <p className={`${styles.codeSection} my-auto text-white`}>{option.currency.code}</p>
     </div>
   </div>
 )
