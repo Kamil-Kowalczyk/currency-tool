@@ -1,7 +1,59 @@
-/*
- * Replace this with your own classes
- *
- * e.g.
- * .container {
- * }
-*/
+.holder {
+    border-radius: 50rem;
+}
+.holder:hover {
+    outline: 1px lightgray solid;
+}
+.holder:focus-within {
+    outline: 1px lightgray solid;
+}
+.input {
+    background-color: #2B2B2B;
+    border-color: #2B2B2B;
+    border-top-left-radius: 50rem;
+    border-bottom-left-radius: 50rem;
+    color: white;
+    transition: none;
+    padding-left: 1.4rem;
+    padding-right: 0;
+    ::-webkit-outer-spin-button,
+    ::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    -moz-appearance: textfield;
+        appearance: textfield;
+}
+.input:focus {
+    background-color: #2B2B2B;
+    color: white;
+    box-shadow: none;
+    border: none;
+    outline: none;
+}
+.buttonsHolder {
+    background-color: #2B2B2B;
+    border-top-right-radius: 50rem;
+    border-bottom-right-radius: 50rem;
+    padding-right: 0.75rem;
+}
+.incrementButton {
+    position: relative;
+    top: calc(calc(1.5em + 1rem) / 12);
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    height: 1.1rem;
+}
+.incrementButton:hover {
+    background-color: #404040;
+}
+.decrementButton {
+    position: relative;
+    bottom: calc(calc(1.5em + 1rem) / 12);
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    height: 1.1rem;
+}
+.decrementButton:hover {
+    background-color: #404040;
+}
