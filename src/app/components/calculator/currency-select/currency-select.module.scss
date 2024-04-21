@@ -4,3 +4,14 @@
 .codeSection {
     width: 3.5rem;
 }
+.holder {
+    border-radius: 50rem;
+    padding-left: 1px;
+    padding-right: 1px;
+}
+.holder:hover {
+    outline: 1px lightgray solid,
+}
+.holder:focus-within {
+    outline: 1px lightgray solid,
+}

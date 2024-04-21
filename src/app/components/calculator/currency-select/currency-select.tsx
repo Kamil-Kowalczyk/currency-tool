@@ -8,7 +8,7 @@ export interface CurrencySelectProps {
   onChange: (value: SingleValue<SelectOption>) => void,
 }
 
-interface SelectOption {
+export interface SelectOption {
   value: number;
   currency: Currency
 }
@@ -35,7 +35,9 @@ const selectStyles: StylesConfig<SelectOption> = {
     minHeight: 'calc(1.5em + 1rem + calc(1px * 2))',
     paddingLeft: '0.25rem',
     backgroundColor: '#2B2B2B',
-    borderColor: '#2B2B2B'
+    borderColor: '#2B2B2B',
+    border: '0',
+    boxShadow: '0',
   }),
   input: (styles) => ({
     ...styles,
@@ -66,9 +68,9 @@ export function CurrencySelect({data, value, onChange}: CurrencySelectProps) {
   }))
 
   return (
-    <div className={'d-inline-flex w-75 ps-3 pe-3'}>
+    <div className={`${styles.holder} d-inline-flex w-100`}>
       <ReactSelect 
-        className={'w-100 text-center'}
+        className='w-100 text-center'
         styles={selectStyles}
         isMulti={false}
         options={options}
