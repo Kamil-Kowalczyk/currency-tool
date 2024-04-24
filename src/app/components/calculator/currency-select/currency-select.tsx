@@ -1,19 +1,21 @@
 import { Currency } from 'src/app/contexts/currency-data-context/models/currency-model';
 import styles from './currency-select.module.scss';
 import ReactSelect, { SingleValue, StylesConfig } from 'react-select';
+import TextImage from '../../reusable/text-image/text-image';
 
 export interface CurrencySelectProps {
   data: Currency[],
   value: number,
-  onChange: (value: SingleValue<SelectOption>) => void,
+  className?: string,
+  onChange?: (option: SingleValue<CurrencySelectOption>) => void,
 }
 
-export interface SelectOption {
+export interface CurrencySelectOption {
   value: number;
   currency: Currency
 }
 
-const selectStyles: StylesConfig<SelectOption> = {
+const selectStyles: StylesConfig<CurrencySelectOption> = {
   option: (styles) => ({
     ...styles,
     backgroundColor: '#2B2B2B',
@@ -49,26 +51,31 @@ const selectStyles: StylesConfig<SelectOption> = {
   })
 }
 
-const selectOptionLabel = (option: SelectOption) => (
-  <div className='d-flex h-100'>
-    <div className='d-inline-flex my-auto w-100 justify-content-left'>
-      <img className={`${styles.image} my-auto ms-1 me-1`} 
-        src={option.currency.imageSrc} 
-        alt={`${option.currency.code.toLowerCase()}.png`}
-      />
-      <p className={`${styles.codeSection} my-auto text-white`}>{option.currency.code}</p>
-    </div>
-  </div>
+const selectOptionLabel = (option: CurrencySelectOption) => (
+  // <div className='d-flex h-100'>
+  //   <div className='d-inline-flex my-auto w-100 justify-content-left'>
+  //     <img className={`${styles.image} my-auto ms-1 me-1`} 
+  //       src={option.currency.imageSrc} 
+  //       alt={`${option.currency.code.toLowerCase()}.png`}
+  //     />
+  //     <p className={`${styles.codeSection} my-auto text-white`}>{option.currency.code}</p>
+  //   </div>
+  // </div>
+  <TextImage 
+    src={option.currency.imageSrc}
+    alt={`${option.currency.code.toLowerCase()}.png`}
+    text={option.currency.code}
+  />
 )
 
-export function CurrencySelect({data, value, onChange}: CurrencySelectProps) {
-  const options: SelectOption[] = data.map((currency, index) => ({
+export function CurrencySelect({data, value, onChange, className}: CurrencySelectProps) {
+  const options: CurrencySelectOption[] = data.map((currency, index) => ({
     value: index,
     currency: currency
   }))
 
   return (
-    <div className={`${styles.holder} d-inline-flex w-100`}>
+    <div className={`${styles.holder} d-inline-flex ${className}`}>
       <ReactSelect 
         className='w-100 text-center'
         styles={selectStyles}
