@@ -1,50 +1,12 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './amount-input.module.scss';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { useRef } from 'react';
+import IconButton from '../../reusable/icon-button/icon-button';
 
 export interface AmountInputProps {
   value: string
   min?: number | undefined
   onChange: (value: string) => void 
-}
-
-interface IconButtonProps {
-  icon: IconDefinition
-  onClick?: () => void
-  className?: string
-}
-
-export function IconButton({ icon, className, onClick }: IconButtonProps) {
-  const timer = useRef<NodeJS.Timer>()
-  const interval = 200
-
-  const handleMouseDown = () => {
-    timer.current = setInterval(() => {
-      handleClick()
-    }, interval)
-  }
-
-  const handleMouseUp = () => {
-    clearInterval(timer.current)
-  }
-
-  const handleClick = () => {
-    if (onClick)
-      onClick()
-  }
-
-  return (
-      <FontAwesomeIcon 
-        icon={icon} 
-        size={'lg'} 
-        className={className} 
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onClick={handleClick}
-      />
-  )
 }
 
 export function AmountInput({ value , min = undefined, onChange }: AmountInputProps) {
