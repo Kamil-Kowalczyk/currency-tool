@@ -3,9 +3,9 @@ import styles from './calculator.module.scss';
 import { useState } from "react";
 import { useCurrencyContext } from '../../contexts/currency-data-context/currency-data-context';
 import AmountInput from './amount-input/amount-input';
-import CurrencySelect, { SelectOption } from './currency-select/currency-select';
+import CurrencySelect from './currency-select/currency-select';
 import { Currency } from 'src/app/contexts/currency-data-context/models/currency-model';
-import { SingleValue } from 'react-select';
+import { calculateRate } from '../../contexts/currency-data-context/tools/currency-tools';
 
 export interface CalculatorFormProps {
     currencyTable: Currency[]
@@ -17,11 +17,6 @@ function CalculatorForm({ currencyTable } : CalculatorFormProps) {
     const [firstCur, setFirstCur] = useState<number>(0)
     const [secondCur, setSecondCur] = useState<number>(0)
 
-    const calculateRate = () => {
-        let calculatedRate = currencyTable[firstCur].rate / currencyTable[secondCur].rate
-        return calculatedRate
-    }
-
     const handleAmountChange = (value: string, firstChanged: boolean) => {
         setAmount(value)
         setHasFirtsChanged(firstChanged)
@@ -29,9 +24,8 @@ function CalculatorForm({ currencyTable } : CalculatorFormProps) {
 
     let firstAmount: string
     let secondAmount: string
-    let rate: number = calculateRate()
+    let rate: number = calculateRate(currencyTable[firstCur], currencyTable[secondCur])
     
-    rate = calculateRate()
     if (firstCur == secondCur) {
         firstAmount = amount
         secondAmount = amount
@@ -51,13 +45,15 @@ function CalculatorForm({ currencyTable } : CalculatorFormProps) {
                     <CurrencySelect 
                         data={currencyTable} 
                         value={firstCur}
+                        className='w-100'
                         onChange={option => setFirstCur(option ? option.value : 0)}
                     />
                 </div>
                 <div className="col-6 text-center">
                     <CurrencySelect 
                         data={currencyTable} 
-                        value={secondCur} 
+                        value={secondCur}
+                        className='w-100'
                         onChange={option => setSecondCur(option ? option.value : 0)}
                     />
                 </div>
