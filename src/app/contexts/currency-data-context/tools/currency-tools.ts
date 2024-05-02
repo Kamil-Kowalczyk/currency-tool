@@ -1,5 +1,17 @@
 import { Currency } from "../models/currency-model"
 
+export enum SortType {
+    ASC,
+    DESC,
+    NONE
+}
+
+export enum SortBy {
+    CODE,
+    NAME,
+    RATE
+}
+
 export type CurrencyComparator = (a: Currency, b: Currency) => number
 
 export const calculateRate = (firstCur: Currency, secondCur: Currency) => {
@@ -8,34 +20,54 @@ export const calculateRate = (firstCur: Currency, secondCur: Currency) => {
 }
 
 export const rateAscComparator = (a: Currency, b: Currency) => {
+    if (a === undefined && b === undefined) return 0
+    if (a === undefined) return 1
+    if (b === undefined) return -1
+    
     return a.rate - b.rate
 }
 
 export const rateDescComparator = (a: Currency, b: Currency) => {
+    if (a === undefined && b === undefined) return 0
+    if (a === undefined) return -1
+    if (b === undefined) return 1
+
     return b.rate - a.rate
 }
 
 export const codeAscComparator = (a: Currency, b: Currency) => {
-    if (a.name > b.name)
+    if (a === undefined && b === undefined) return 0
+    if (a === undefined) return 1
+    if (b === undefined) return -1
+
+    if (a.code > b.code)
         return 1
 
-    if (a.name < b.name)
+    if (a.code < b.code)
         return -1
 
     return 0
 }
 
 export const codeDescComparator = (a: Currency, b: Currency) => {
-    if (a.name < b.name)
+    if (a === undefined && b === undefined) return 0
+    if (a === undefined) return -1
+    if (b === undefined) return 1
+
+    if (a.code < b.code)
         return 1
     
-    if (a.name > b.name)
+    if (a.code > b.code)
         return -1
 
     return 0
 }
 
 export const nameAscComparator = (a: Currency, b: Currency) => {
+    if (a === undefined && b === undefined) return 0
+    if (a === undefined) return 1
+    if (b === undefined) return -1
+
     let nameA = a.name.toLowerCase()
     let nameB = b.name.toLowerCase()
 
@@ -48,7 +80,11 @@ export const nameAscComparator = (a: Currency, b: Currency) => {
     return 0
 }
 
-export const nameDescCopmparator = (a: Currency, b: Currency) => {
+export const nameDescComparator = (a: Currency, b: Currency) => {
+    if (a === undefined && b === undefined) return 0
+    if (a === undefined) return -1
+    if (b === undefined) return 1
+
     let nameA = a.name.toLowerCase()
     let nameB = b.name.toLowerCase()
 
@@ -59,4 +95,31 @@ export const nameDescCopmparator = (a: Currency, b: Currency) => {
         return -1
 
     return 0
+}
+
+export const sortCurTable = (table: Currency[], sortBy: SortBy = SortBy.NAME, sortType: SortType = SortType.ASC) => {
+    if (table.length < 2 || table === undefined) return table
+    if (sortType == SortType.NONE) return table
+
+    let sortedTable = [...table]
+    let comparator: CurrencyComparator
+
+    switch (sortBy) {
+        case SortBy.CODE:
+            comparator = codeAscComparator
+            break;
+        case SortBy.NAME:
+            comparator = nameAscComparator
+            break;
+        case SortBy.RATE:
+            comparator = rateAscComparator
+            break;
+    }
+
+    sortedTable.sort(comparator)
+
+    if (sortType == SortType.DESC)
+        sortedTable.reverse()
+
+    return sortedTable
 }

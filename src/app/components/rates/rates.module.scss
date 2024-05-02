@@ -1,4 +1,36 @@
+th {
+    cursor: pointer;
+}
+
 .currencyTable {
     border-collapse: separate;
     border-spacing: 0;
+    font-size: 1.10rem;
+}
+.borders {
+    border-top: 0 !important;
+    border-right: 0 !important;
+    border-left: 0 !important;
+}
+.thContainer {
+    height: 3.5rem;
+}
+.sortCaretsHolder {
+    padding-left: 1rem;
+}
+.upperCaret {
+    position: relative;
+    top: calc(1.5rem / 2);
+    height: 1.2rem;
+}
+.lowerCaret {
+    position: relative;
+    bottom: calc(1.5rem / 2);
+    height: 1.2rem;
+}
+.activeCaret {
+    color: whitesmoke !important;
+}
+.currencySelect {
+    width: 70%;
 }

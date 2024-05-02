@@ -9,9 +9,10 @@ export interface IconButtonProps {
   className?: string
   isLongPress?: boolean
   size?: SizeProp
+  style?: React.CSSProperties
 }
 
-export function IconButton({ icon, className, onClick, isLongPress = true, size = 'lg' }: IconButtonProps) {
+export function IconButton({ icon, className, onClick, isLongPress = true, size = 'lg', style }: IconButtonProps) {
   const timer = useRef<NodeJS.Timer>()
   const interval = 200
 
@@ -38,6 +39,7 @@ export function IconButton({ icon, className, onClick, isLongPress = true, size 
         onMouseDown={isLongPress? handleMouseDown : undefined}
         onMouseUp={isLongPress? handleMouseUp : undefined}
         onClick={handleClick}
+        style={style}
       />
   )
 }

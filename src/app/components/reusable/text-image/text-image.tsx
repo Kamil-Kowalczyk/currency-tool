@@ -1,19 +1,23 @@
 import styles from './text-image.module.scss';
 
+export interface TextImageClassName {
+  holder?: string
+  image?: string
+  paragraph?: string
+}
+
+export interface TextImageStyle {
+  holder?: React.CSSProperties
+  image?: React.CSSProperties
+  paragraph?: React.CSSProperties
+}
+
 export interface TextImageProps {
   src: string
   alt: string
   text: string
-  className?: {
-    holder?: string
-    image?: string
-    paragraph?: string
-  },
-  style?: {
-    holder?: React.CSSProperties
-    image?: React.CSSProperties
-    paragraph?: React.CSSProperties
-  }
+  className?: TextImageClassName,
+  style?: TextImageStyle
 }
 
 export function TextImage({ src, alt, text, className, style }: TextImageProps) {
