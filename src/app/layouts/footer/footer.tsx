@@ -2,8 +2,10 @@ import styles from './footer.module.scss';
 
 export function Footer() {
   return (
-    <div className='container mt-5'>
-      <h6 className='text-start' >Autor: Kamil Kowalczyk</h6>
+    <div className={`container-fluid mt-5 pt-3 ${styles.holder}`}>
+      <div className='container'>
+        <h6 className='text-start' >Created by: Kamil Kowalczyk</h6>
+      </div>
     </div>
   )
 }
