@@ -4,18 +4,18 @@ import ReactSelect, { SingleValue, StylesConfig } from 'react-select';
 import TextImage from '../../reusable/text-image/text-image';
 
 export interface CurrencySelectProps {
-  data: Currency[],
-  value: number,
+  options: Currency[],
+  value: Currency,
   className?: string,
-  onChange?: (option: SingleValue<CurrencySelectOption>) => void,
+  onChange?: (option: SingleValue<Currency>) => void,
 }
 
-export interface CurrencySelectOption {
-  value: number;
-  currency: Currency
-}
+// export interface CurrencySelectOption {
+//   value: number;
+//   currency: Currency
+// }
 
-const selectStyles: StylesConfig<CurrencySelectOption> = {
+const selectStyles: StylesConfig<Currency> = {
   option: (styles) => ({
     ...styles,
     backgroundColor: '#2B2B2B',
@@ -51,28 +51,19 @@ const selectStyles: StylesConfig<CurrencySelectOption> = {
   })
 }
 
-const selectOptionLabel = (option: CurrencySelectOption) => (
-  // <div className='d-flex h-100'>
-  //   <div className='d-inline-flex my-auto w-100 justify-content-left'>
-  //     <img className={`${styles.image} my-auto ms-1 me-1`} 
-  //       src={option.currency.imageSrc} 
-  //       alt={`${option.currency.code.toLowerCase()}.png`}
-  //     />
-  //     <p className={`${styles.codeSection} my-auto text-white`}>{option.currency.code}</p>
-  //   </div>
-  // </div>
+const selectOptionLabel = (option: Currency) => (
   <TextImage 
-    src={option.currency.imageSrc}
-    alt={`${option.currency.code.toLowerCase()}.png`}
-    text={option.currency.code}
+    src={option.imageSrc}
+    alt={`${option.code.toLowerCase()}.png`}
+    text={option.code}
   />
 )
 
-export function CurrencySelect({data, value, onChange, className}: CurrencySelectProps) {
-  const options: CurrencySelectOption[] = data.map((currency, index) => ({
-    value: index,
-    currency: currency
-  }))
+export function CurrencySelect({options, value, onChange, className}: CurrencySelectProps) {
+  // const options: CurrencySelectOption[] = data.map((currency, index) => ({
+  //   value: index,
+  //   currency: currency
+  // }))
 
   return (
     <div className={`${styles.holder} d-inline-flex ${className}`}>
@@ -81,10 +72,10 @@ export function CurrencySelect({data, value, onChange, className}: CurrencySelec
         styles={selectStyles}
         isMulti={false}
         options={options}
-        value={options[value]}
+        value={value}
         onChange={onChange}
         noOptionsMessage={() => ("Brak waluty")}
-        getOptionValue={(option) => option.currency.code}
+        //getOptionValue={(option) => option.currency.code}
         formatOptionLabel={selectOptionLabel}
       />
     </div>

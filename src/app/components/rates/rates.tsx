@@ -4,11 +4,12 @@ import { useCurrencyContext } from "../../contexts/currency-data-context/currenc
 import { Currency } from '../../contexts/currency-data-context/models/currency-model';
 import IconButton from '../reusable/icon-button/icon-button';
 import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
-import CurrencySelect, { CurrencySelectOption } from '../calculator/currency-select/currency-select';
 import { useEffect, useState } from 'react';
 import { SingleValue } from 'react-select';
 import { SortBy, SortType, calculateRate, sortCurTable } from '../../contexts/currency-data-context/tools/currency-tools';
 import TextImage from '../reusable/text-image/text-image';
+import CurrencySelect from '../calculator/currency-select/currency-select';
+import { BASE_CURRENCY } from '../../contexts/currency-data-context/tools/table-fetcher';
 
 interface TableHeadColProps {
     colSpan?: number
@@ -42,8 +43,8 @@ interface TableBodyProps {
 
 interface MainCurSelectorProps {
     curTable: Currency[]
-    value: number
-    onChange: (option: SingleValue<CurrencySelectOption>) => void
+    value: Currency
+    onChange: (option: SingleValue<Currency>) => void
 }
 
 interface TableProps {
@@ -180,7 +181,7 @@ function TableBody({ table, rate, baseCurName }: TableBodyProps) {
 }
 
 function Table({ curTable }: TableProps) {
-    const [selectedCurIndex, setSelectedCurIndex] = useState<number>(0)
+    const [selectedCur, setSelectedCur] = useState<Currency>(BASE_CURRENCY)
     const [sortingType, setSortingType] = useState<SortType>(SortType.NONE)
     const [sortingBy, setSortingBy] = useState<SortBy>(SortBy.NAME)
     const [prevSortBy, setPrevSortBy] = useState<SortBy>(SortBy.NAME)
@@ -189,7 +190,7 @@ function Table({ curTable }: TableProps) {
         console.log(sortingType, sortingBy)
     }, [sortingBy, sortingType])
 
-    let rate = calculateRate(curTable[0], curTable[selectedCurIndex])
+    let rate = calculateRate(BASE_CURRENCY, selectedCur)
     
     if (sortingBy != prevSortBy) {
         setPrevSortBy(sortingBy)
@@ -218,8 +219,8 @@ function Table({ curTable }: TableProps) {
         <div>
             <MainCurSelector 
                 curTable={curTable} 
-                value={selectedCurIndex} 
-                onChange={(option) => setSelectedCurIndex(option ? option.value : 0)}
+                value={selectedCur} 
+                onChange={(option) => setSelectedCur(option ? option : BASE_CURRENCY)}
             />
             <table className={`table mb-0 ${styles.currencyTable}`}>
                 <TableHead 
@@ -232,8 +233,8 @@ function Table({ curTable }: TableProps) {
                     sortType={sortingType}
                 />
                 <TableBody 
-                    table={sortCurTable(curTable, sortingBy, sortingType).filter((value) => value.code != curTable[selectedCurIndex].code)} 
-                    baseCurName={curTable[selectedCurIndex].code}
+                    table={sortCurTable(curTable, sortingBy, sortingType).filter((value) => value.code != selectedCur.code)} 
+                    baseCurName={selectedCur.code}
                     rate={rate}
                 />
             </table>
@@ -246,7 +247,7 @@ function MainCurSelector({ curTable, value, onChange }: MainCurSelectorProps) {
         <div className='mt-2 mb-4 row'>
             <h5 className='text-center mb-4'>Wybierz walutę, dla której będą wyświetlane odpowiadające jej kursy</h5>
             <CurrencySelect 
-                data={curTable} 
+                options={curTable} 
                 value={value} 
                 className={`${styles.currencySelect} mx-auto`}
                 onChange={onChange}
@@ -263,7 +264,7 @@ export function Rates() {
     const curTable = useCurrencyContext()
     
     return (
-        <div className='col-9 mx-auto bg-dark p-4 mt-3'>
+        <div className={`col-9 mx-auto p-4 mt-3 rounded-4 ${styles.holder}`}>
             <Header />
             {
                 curTable.length > 0 ? (

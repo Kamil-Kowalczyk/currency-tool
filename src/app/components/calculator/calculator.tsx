@@ -6,6 +6,9 @@ import AmountInput from './amount-input/amount-input';
 import CurrencySelect from './currency-select/currency-select';
 import { Currency } from 'src/app/contexts/currency-data-context/models/currency-model';
 import { calculateRate } from '../../contexts/currency-data-context/tools/currency-tools';
+import { BASE_CURRENCY } from '../../contexts/currency-data-context/tools/table-fetcher';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEquals } from '@fortawesome/free-solid-svg-icons';
 
 export interface CalculatorFormProps {
     currencyTable: Currency[]
@@ -14,8 +17,8 @@ export interface CalculatorFormProps {
 function CalculatorForm({ currencyTable } : CalculatorFormProps) {
     const [amount, setAmount] = useState<string>("1")
     const [hasFirstChanged, setHasFirtsChanged] = useState<boolean>(false)
-    const [firstCur, setFirstCur] = useState<number>(0)
-    const [secondCur, setSecondCur] = useState<number>(0)
+    const [firstCur, setFirstCur] = useState<Currency>(BASE_CURRENCY)
+    const [secondCur, setSecondCur] = useState<Currency>(BASE_CURRENCY)
 
     const handleAmountChange = (value: string, firstChanged: boolean) => {
         setAmount(value)
@@ -24,7 +27,7 @@ function CalculatorForm({ currencyTable } : CalculatorFormProps) {
 
     let firstAmount: string
     let secondAmount: string
-    let rate: number = calculateRate(currencyTable[firstCur], currencyTable[secondCur])
+    let rate: number = calculateRate(firstCur, secondCur)
     
     if (firstCur == secondCur) {
         firstAmount = amount
@@ -43,24 +46,24 @@ function CalculatorForm({ currencyTable } : CalculatorFormProps) {
             <div className="row">
                 <div className="col-6 text-center">
                     <CurrencySelect 
-                        data={currencyTable} 
+                        options={currencyTable} 
                         value={firstCur}
                         className='w-100'
-                        onChange={option => setFirstCur(option ? option.value : 0)}
+                        onChange={option => setFirstCur(option ? option : BASE_CURRENCY)}
                     />
                 </div>
                 <div className="col-6 text-center">
                     <CurrencySelect 
-                        data={currencyTable} 
+                        options={currencyTable} 
                         value={secondCur}
                         className='w-100'
-                        onChange={option => setSecondCur(option ? option.value : 0)}
+                        onChange={option => setSecondCur(option ? option : BASE_CURRENCY)}
                     />
                 </div>
             </div>
-            <div className="row">
-                <div className="col text-center">
-                    <h2 className="display-2 text-white">≈</h2>
+            <div className="row mt-3 mb-3">
+                <div className="col text-center text-white">
+                    <FontAwesomeIcon icon={faEquals} size={'4x'} />
                 </div>
             </div>
             <div className="row">
