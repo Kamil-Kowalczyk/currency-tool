@@ -90,10 +90,12 @@ export function Calculator() {
     const currencyTable = useCurrencyContext();
 
     return (
-        <div className="container h-100">
-            <h2 className="text-center mb-4 mt-4">Kalkulator</h2>
-            <div className={`container ${styles.calcContainer} col-xl-6 col-lg-7 col-md-10 col-sm-12 rounded-5`}>
-                <div className="row h-100">
+        <div className={`container ${styles.holder}`}>
+            <div className={`container ${styles.calcContainer} col-xl-6 col-lg-7 col-md-10 col-sm-12 rounded-5 mt-5 d-flex flex-column`}>
+                <div className='row'>
+                    <h2 className="text-center mt-4">Kalkulator</h2>
+                </div>
+                <div className="row flex-grow-1">
                     <div className="col my-auto mx-auto">
                         {
                             currencyTable.length > 0 ? (

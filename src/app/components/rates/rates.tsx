@@ -49,13 +49,14 @@ interface MainCurSelectorProps {
 
 interface TableProps {
     curTable: Currency[]
+    selectedCur : Currency
 }
 
 function TableHeadCol({ colSpan, className, content, handleClick }: TableHeadColProps) {
     return (
-        <th className={className.th} colSpan={colSpan} onClick={handleClick}>
+        <th className={`${className.th} ${styles.yellowBg}`} colSpan={colSpan} onClick={handleClick}>
             <div className='d-flex'>
-                <div className={`${styles.thContainer} d-flex mx-auto`}>
+                <div className={`d-flex mx-auto`}>
                     <div className='my-auto'>
                         {content}
                     </div>
@@ -83,21 +84,21 @@ function TableHeadCol({ colSpan, className, content, handleClick }: TableHeadCol
 
 function TableHead({ clickHandlers, sortBy, sortType }: TableHeadProps) {
     let byCodeClassName = {
-        th: `${styles.borders} col-1 bg-warning border border-3`,
+        th: `${styles.borders} col-1 border border-3`,
         carets: {
             upper: '',
             lower: ''
         }
     }
     let byNameClassName = {
-        th: 'col-3 bg-warning border-3 border-top-0 border-bottom-3',
+        th: 'col-3 border-3 border-top-0 border-bottom-3',
         carets: {
             upper: '',
             lower: ''
         }
     }
     let byRateClassName = {
-        th: `${styles.borders} col-4 bg-warning border border-3`,
+        th: `${styles.borders} col-4 border border-3`,
         carets: {
             upper: '',
             lower: ''
@@ -130,7 +131,7 @@ function TableHead({ clickHandlers, sortBy, sortType }: TableHeadProps) {
 
     return (
         <thead>
-            <tr className='text-center'>
+            <tr className={`text-center ${styles.tableRow}`}>
                 <TableHeadCol 
                     className={byCodeClassName}
                     content='Kod'
@@ -154,10 +155,10 @@ function TableHead({ clickHandlers, sortBy, sortType }: TableHeadProps) {
 
 function TableBody({ table, rate, baseCurName }: TableBodyProps) {
     return (
-        <tbody className='table-dark'>
+        <tbody>
             {
                 table.map((currency: Currency) => (
-                    <tr className='text-center' key={currency.code}>
+                    <tr className={`text-center text-white ${styles.tableRow}`} key={currency.code}>
                         <td className={`${styles.borders} col-1 align-middle border border-3`}>
                             <TextImage 
                                 src={currency.imageSrc} 
@@ -171,7 +172,7 @@ function TableBody({ table, rate, baseCurName }: TableBodyProps) {
                             <span>{(currency.rate * rate).toFixed(6)} {baseCurName}</span>
                         </td>
                         <td className={`${styles.borders} col-2 align-middle border border-3`}>
-                            <button className='btn btn-warning'>Historia kursów</button>
+                            <button className={`btn ${styles.yellowBg} pt-2 pb-2`}>Historia kursów</button>
                         </td>
                     </tr>
                 ))
@@ -180,8 +181,8 @@ function TableBody({ table, rate, baseCurName }: TableBodyProps) {
     )
 }
 
-function Table({ curTable }: TableProps) {
-    const [selectedCur, setSelectedCur] = useState<Currency>(BASE_CURRENCY)
+function Table({ curTable, selectedCur }: TableProps) {
+    
     const [sortingType, setSortingType] = useState<SortType>(SortType.NONE)
     const [sortingBy, setSortingBy] = useState<SortBy>(SortBy.NAME)
     const [prevSortBy, setPrevSortBy] = useState<SortBy>(SortBy.NAME)
@@ -217,11 +218,6 @@ function Table({ curTable }: TableProps) {
 
     return (
         <div>
-            <MainCurSelector 
-                curTable={curTable} 
-                value={selectedCur} 
-                onChange={(option) => setSelectedCur(option ? option : BASE_CURRENCY)}
-            />
             <table className={`table mb-0 ${styles.currencyTable}`}>
                 <TableHead 
                     clickHandlers={{
@@ -262,13 +258,21 @@ function Header() {
 
 export function Rates() {
     const curTable = useCurrencyContext()
+    const [selectedCur, setSelectedCur] = useState<Currency>(BASE_CURRENCY)
     
     return (
-        <div className={`col-9 mx-auto p-4 mt-3 rounded-4 ${styles.holder}`}>
+        <div className={`col-9 mx-auto p-4 mt-5 rounded-4 ${styles.holder}`}>
             <Header />
             {
                 curTable.length > 0 ? (
-                    <Table curTable={curTable} />
+                    <div>
+                        <MainCurSelector 
+                            curTable={curTable} 
+                            value={selectedCur} 
+                            onChange={(option) => setSelectedCur(option ? option : BASE_CURRENCY)}
+                        />
+                        <Table curTable={curTable} selectedCur={selectedCur} />
+                    </div>
                 ) : (
                     <p className='text-center'>Ładawanie danych, proszę czekać...</p>
                 )

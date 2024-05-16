@@ -4,12 +4,18 @@ import styles from './nav-item.module.scss';
 export interface NavItemProps {
   path: string,
   title: string,
+  isCurrentPage: boolean
 }
 
-export function NavItem({path, title}: NavItemProps) {
+export function NavItem({path, title, isCurrentPage}: NavItemProps) {
   return (
-    <li className='nav-item active me-2'>
-      <Link className={`nav-link ${styles.navLink}`} to={path}>{title}</Link>
+    <li className={`${styles.linkContainer} nav-item me-4`}>
+      <Link 
+        className={`nav-link ${styles.normalLink} ${isCurrentPage ? styles.currentPage : styles.normalLink}`}
+        to={path}
+      >
+        {title}
+      </Link>
     </li>
   )
 }

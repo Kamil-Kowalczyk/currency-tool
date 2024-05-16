@@ -5,7 +5,7 @@ import MainHolder from './layouts/main-holder/main-holder';
 
 export function App() {
   return (
-    <div className={`${styles.app} vh-100 flex-column d-flex`}>
+    <div className={`${styles.app} flex-column d-flex`}>
       <Navbar/>
       <MainHolder />
       <Footer/>

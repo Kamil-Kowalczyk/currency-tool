@@ -2,6 +2,11 @@ th {
     cursor: pointer;
 }
 
+td {
+    color: white !important;
+    background-color: #2b2b2b !important;
+}
+
 .currencyTable {
     border-collapse: separate;
     border-spacing: 0;
@@ -11,9 +16,6 @@ th {
     border-top: 0 !important;
     border-right: 0 !important;
     border-left: 0 !important;
-}
-.thContainer {
-    height: 3.5rem;
 }
 .sortCaretsHolder {
     padding-left: 1rem;
@@ -36,5 +38,12 @@ th {
 }
 
 .holder {
-    background-color: #3B3B3B;
+    background-color: #333333;
+}
+.tableRow {
+    height: 4em;
+}
+.yellowBg {
+    background-color: #f9b836 !important;
+    color: #121212 !important;
 }
