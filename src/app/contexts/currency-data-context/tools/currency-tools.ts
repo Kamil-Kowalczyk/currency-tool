@@ -27,14 +27,6 @@ export const rateAscComparator = (a: Currency, b: Currency) => {
     return a.rate - b.rate
 }
 
-export const rateDescComparator = (a: Currency, b: Currency) => {
-    if (a === undefined && b === undefined) return 0
-    if (a === undefined) return -1
-    if (b === undefined) return 1
-
-    return b.rate - a.rate
-}
-
 export const codeAscComparator = (a: Currency, b: Currency) => {
     if (a === undefined && b === undefined) return 0
     if (a === undefined) return 1
@@ -44,20 +36,6 @@ export const codeAscComparator = (a: Currency, b: Currency) => {
         return 1
 
     if (a.code < b.code)
-        return -1
-
-    return 0
-}
-
-export const codeDescComparator = (a: Currency, b: Currency) => {
-    if (a === undefined && b === undefined) return 0
-    if (a === undefined) return -1
-    if (b === undefined) return 1
-
-    if (a.code < b.code)
-        return 1
-    
-    if (a.code > b.code)
         return -1
 
     return 0
@@ -75,23 +53,6 @@ export const nameAscComparator = (a: Currency, b: Currency) => {
         return 1
 
     if (nameA < nameB)
-        return -1
-
-    return 0
-}
-
-export const nameDescComparator = (a: Currency, b: Currency) => {
-    if (a === undefined && b === undefined) return 0
-    if (a === undefined) return -1
-    if (b === undefined) return 1
-
-    let nameA = a.name.toLowerCase()
-    let nameB = b.name.toLowerCase()
-
-    if (nameA < nameB)
-        return 1
-
-    if (nameA > nameB)
         return -1
 
     return 0
