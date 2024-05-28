@@ -10,11 +10,6 @@ export interface CurrencySelectProps {
   onChange?: (option: SingleValue<Currency>) => void,
 }
 
-// export interface CurrencySelectOption {
-//   value: number;
-//   currency: Currency
-// }
-
 const selectStyles: StylesConfig<Currency> = {
   option: (styles) => ({
     ...styles,
@@ -48,6 +43,10 @@ const selectStyles: StylesConfig<Currency> = {
   noOptionsMessage: (styles) => ({
     ...styles,
     color: 'white'
+  }),
+  singleValue: (styles) => ({
+    ...styles,
+    color: 'white'
   })
 }
 
@@ -60,10 +59,6 @@ const selectOptionLabel = (option: Currency) => (
 )
 
 export function CurrencySelect({options, value, onChange, className}: CurrencySelectProps) {
-  // const options: CurrencySelectOption[] = data.map((currency, index) => ({
-  //   value: index,
-  //   currency: currency
-  // }))
 
   return (
     <div className={`${styles.holder} d-inline-flex ${className}`}>
@@ -75,7 +70,7 @@ export function CurrencySelect({options, value, onChange, className}: CurrencySe
         value={value}
         onChange={onChange}
         noOptionsMessage={() => ("Brak waluty")}
-        //getOptionValue={(option) => option.currency.code}
+        getOptionValue={(option) => option.code}
         formatOptionLabel={selectOptionLabel}
       />
     </div>
