@@ -22,11 +22,11 @@ function Card({ title, children }: CardProps) {
 
 export function Home(props: HomeProps) {
   return (
-    <div className={`col-9 mx-auto p-4 mt-5 h-100 rounded-4 ${styles.holder}`}>
+    <div className={`mx-auto p-4 mt-5 h-100 rounded-4 ${styles.holder}`}>
       <h2 className='text-center m-4'>Witaj w narzędziu walutowym!</h2>
       <div className='mt-5'>
         <Card title='Informacja'>
-          Narzędzie operuje na aktualnie obowiązującej tabeli kursów pochodzącej z 
+          Narzędzie operuje na kursach oraz tabelach kursów pochodzących z 
           <a href='http://api.nbp.pl/'> API Narodowego Banku Polskiego</a>
         </Card>
         <Card title='Linki do autorów flag krajów wykorzystanych w apliakcji'> 

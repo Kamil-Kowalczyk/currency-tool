@@ -10,6 +10,7 @@ import { SortBy, SortType, calculateRate, sortCurTable } from '../../contexts/cu
 import TextImage from '../reusable/text-image/text-image';
 import CurrencySelect from '../calculator/currency-select/currency-select';
 import { BASE_CURRENCY } from '../../contexts/currency-data-context/tools/table-fetcher';
+import HistoryDialog from './history-dialog/history-dialog';
 
 interface TableHeadColProps {
     colSpan?: number
@@ -38,7 +39,7 @@ interface TableHeadProps {
 interface TableBodyProps {
   table: Currency[]
   rate: number
-  baseCurName: string
+  showHistoryDialog: (currency: Currency) => void
 }
 
 interface MainCurSelectorProps {
@@ -50,6 +51,7 @@ interface MainCurSelectorProps {
 interface TableProps {
     curTable: Currency[]
     selectedCur : Currency
+    showHistoryDialog: (currency: Currency) => void
 }
 
 function TableHeadCol({ colSpan, className, content, handleClick }: TableHeadColProps) {
@@ -153,7 +155,7 @@ function TableHead({ clickHandlers, sortBy, sortType }: TableHeadProps) {
     )
 }
 
-function TableBody({ table, rate, baseCurName }: TableBodyProps) {
+function TableBody({ table, rate, showHistoryDialog }: TableBodyProps) {
     return (
         <tbody>
             {
@@ -169,10 +171,15 @@ function TableBody({ table, rate, baseCurName }: TableBodyProps) {
                         </td>
                         <td className='col-3 align-middle border border-3 border-top-0'>{currency.name}</td>
                         <td className={`${styles.borders} col-2 align-middle border border-3`}>
-                            <span>{(currency.rate * rate).toFixed(6)} {baseCurName}</span>
+                            <span>{(calculateRate(BASE_CURRENCY, currency) / rate).toFixed(6)} {currency.code}</span>
                         </td>
                         <td className={`${styles.borders} col-2 align-middle border border-3`}>
-                            <button className={`btn ${styles.yellowBg} pt-2 pb-2`}>Historia kursów</button>
+                            <button 
+                                className={`btn ${styles.yellowBg} pt-2 pb-2`}
+                                onClick={() => showHistoryDialog(currency)}
+                            >
+                                Historia kursów
+                            </button>
                         </td>
                     </tr>
                 ))
@@ -181,15 +188,11 @@ function TableBody({ table, rate, baseCurName }: TableBodyProps) {
     )
 }
 
-function Table({ curTable, selectedCur }: TableProps) {
+function Table({ curTable, selectedCur, showHistoryDialog  }: TableProps) {
     
     const [sortingType, setSortingType] = useState<SortType>(SortType.NONE)
     const [sortingBy, setSortingBy] = useState<SortBy>(SortBy.NAME)
     const [prevSortBy, setPrevSortBy] = useState<SortBy>(SortBy.NAME)
-    
-    useEffect(() => {
-        console.log(sortingType, sortingBy)
-    }, [sortingBy, sortingType])
 
     let rate = calculateRate(BASE_CURRENCY, selectedCur)
     
@@ -207,7 +210,6 @@ function Table({ curTable, selectedCur }: TableProps) {
         handleSortChange(SortBy.CODE)
     }
     
-
     const byNameHandler = () => {
         handleSortChange(SortBy.NAME)
     }
@@ -229,9 +231,10 @@ function Table({ curTable, selectedCur }: TableProps) {
                     sortType={sortingType}
                 />
                 <TableBody 
-                    table={sortCurTable(curTable, sortingBy, sortingType).filter((value) => value.code != selectedCur.code)} 
-                    baseCurName={selectedCur.code}
+                    table={sortCurTable(curTable, sortingBy, sortingType)
+                        .filter((value) => value.code != selectedCur.code)} 
                     rate={rate}
+                    showHistoryDialog={showHistoryDialog}
                 />
             </table>
         </div>
@@ -259,19 +262,41 @@ function Header() {
 export function Rates() {
     const curTable = useCurrencyContext()
     const [selectedCur, setSelectedCur] = useState<Currency>(BASE_CURRENCY)
+    const [targetCur, setTargetCur] = useState<Currency>(BASE_CURRENCY)
+    const [isDialogVisible, setIsDialogVisible] = useState<boolean>(false)
+
+    const showHistoryDialog = (currency: Currency) => {
+        setTargetCur(currency)
+        setIsDialogVisible(true)
+    }
+
+    const handleDialogClose = () => {
+        setIsDialogVisible(false)
+    }
     
     return (
-        <div className={`col-9 mx-auto p-4 mt-5 rounded-4 ${styles.holder}`}>
+        <div className={` mx-auto p-4 mt-5 rounded-4 ${styles.holder}`}>
             <Header />
             {
                 curTable.length > 0 ? (
                     <div>
+                        <HistoryDialog 
+                            initialCur={selectedCur} 
+                            targetCur={targetCur}
+                            show={isDialogVisible}
+                            handleClose={handleDialogClose}
+                        />
                         <MainCurSelector 
                             curTable={curTable} 
                             value={selectedCur} 
                             onChange={(option) => setSelectedCur(option ? option : BASE_CURRENCY)}
                         />
-                        <Table curTable={curTable} selectedCur={selectedCur} />
+                        <Table 
+                            curTable={curTable} 
+                            selectedCur={selectedCur} 
+                            showHistoryDialog={showHistoryDialog} 
+                        />
+                        
                     </div>
                 ) : (
                     <p className='text-center'>Ładawanie danych, proszę czekać...</p>

@@ -1,0 +1,21 @@
+.historyModal {
+    width: 80vw !important;
+    max-width: none;
+}
+.modalHeader {
+    background-color: #f9b836;
+}
+.modalBodyHolder {
+    height: 70vh;
+}
+.periodButton {
+    width: 10em;
+    margin: 0.5em;
+    background-color: #f9b836;
+}
+.periodButton:hover {
+    background-color: #c7932b;
+}
+.selectedButton {
+    background-color: #c7932b;
+}
