@@ -34,10 +34,10 @@ function CalculatorForm({ currencyTable } : CalculatorFormProps) {
         secondAmount = amount
     } else if (hasFirstChanged) {
         firstAmount = amount
-        secondAmount = (parseFloat(amount) * rate).toFixed(2)
+        secondAmount = (parseFloat(amount) * rate).toFixed(3)
     } else {
         secondAmount = amount
-        firstAmount = (parseFloat(amount) / rate).toFixed(2)
+        firstAmount = (parseFloat(amount) / rate).toFixed(3)
     }
     
 
@@ -49,7 +49,10 @@ function CalculatorForm({ currencyTable } : CalculatorFormProps) {
                         options={currencyTable} 
                         value={firstCur}
                         className='w-100'
-                        onChange={option => setFirstCur(option ? option : BASE_CURRENCY)}
+                        onChange={option => {
+                            setFirstCur(option ? option : BASE_CURRENCY)
+                            setHasFirtsChanged(true);
+                        }}
                     />
                 </div>
                 <div className="col-6 text-center">
@@ -57,7 +60,10 @@ function CalculatorForm({ currencyTable } : CalculatorFormProps) {
                         options={currencyTable} 
                         value={secondCur}
                         className='w-100'
-                        onChange={option => setSecondCur(option ? option : BASE_CURRENCY)}
+                        onChange={option => {
+                            setSecondCur(option ? option : BASE_CURRENCY)
+                            setHasFirtsChanged(false);
+                        }}
                     />
                 </div>
             </div>

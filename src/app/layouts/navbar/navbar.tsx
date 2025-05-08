@@ -9,7 +9,15 @@ export function Navbar() {
     <header className={`${styles.navContainer} sticky-top container-fluid flex-column pt-2 pb-2`}>
       <div className='container'>
         <nav className='navbar navbar-expand'>
-          <a className='navbar-brand text-white fw-bold fs-3'>Narzędzie walutowe</a>
+          <a className='navbar-brand text-white fw-bold fs-3 d-flex align-items-center'>
+            <div>
+              <img className={`${styles.logo}`} src='/currency_tool.ico'/>
+            </div>
+            <div>
+              Narzędzie walutowe
+            </div>
+            
+          </a>
           <div className='collapse navbar-collapse'>
             <ul className='navbar-nav' >
               <NavItem 

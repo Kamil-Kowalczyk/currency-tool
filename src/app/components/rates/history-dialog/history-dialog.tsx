@@ -31,9 +31,10 @@ function PeriodButton({content, handleClick, selected = false}: PeriodButtonProp
 
 interface ChartProps {
   rates: Rate[]
+  baseCur: Currency
 }
 
-function Chart({rates} : ChartProps) {
+function Chart({rates, baseCur} : ChartProps) {
   const series: ApexAxisChartSeries = [{
     name: "Cena",
     data: rates.map(rate => rate.rate),
@@ -61,6 +62,13 @@ function Chart({rates} : ChartProps) {
     },
     dataLabels: {
       enabled: false
+    },
+    yaxis: {
+      labels: {
+        formatter: function (value) {
+          return value + ` ${baseCur.code}`;
+        }
+      },
     },
     stroke: {
       curve: 'straight',
@@ -143,7 +151,7 @@ function Dialog({initialCur, targetCur, handleClose} : DialogProps) {
             <div className='col-8'>
               {
                 rates.length > 0 ? (
-                  <Chart rates={rates}/>
+                  <Chart rates={rates} baseCur={initialCur}/>
                 ) : (
                  <h3>Ładawanie danych...</h3>
                 )

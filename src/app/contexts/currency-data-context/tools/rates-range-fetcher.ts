@@ -48,7 +48,7 @@ const fetchRatesRange = (currency: Currency, period: Period) => {
 
     startDate = `${year}-${month < 9 ? '0' + (month + 1) : (month + 1)}-${days <= 9 ? '0' + days : days}`
 
-    return fetch(`http://api.nbp.pl/api/exchangerates/rates/a/${currency.code}/${startDate}/${endDate}/?format=json`)
+    return fetch(`https://api.nbp.pl/api/exchangerates/rates/a/${currency.code}/${startDate}/${endDate}/?format=json`)
         .then(response => response.json())
         .then(data => {
             var rates : Rate[] = []
@@ -77,19 +77,12 @@ export const getRatesRange = async(baseCur: Currency, targetCur: Currency, perio
         }
         targetRates = await fetchRatesRange(targetCur, period) 
     } else {
-        targetRates = await fetchRatesRange(targetCur, period) 
-        baseRates = targetRates.map<Rate>((ra) => (
-            {
-                date: ra.date,
-                rate: 1
-            }
-        ))
+        return targetRates = await fetchRatesRange(targetCur, period) 
     }
-
-    calculatedRates = baseRates.map<Rate>((ra, index) => (
+    calculatedRates = baseRates.map<Rate>((rate, index) => (
         {
-            date: ra.date,
-            rate: parseFloat((ra.rate * (BASE_CURRENCY.rate / targetRates[index].rate)).toFixed(6))
+            date: rate.date,
+            rate: parseFloat(((1 / rate.rate) * targetRates[index].rate).toFixed(6))
         }
     ))
 

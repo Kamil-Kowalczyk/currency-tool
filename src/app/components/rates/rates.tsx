@@ -40,6 +40,7 @@ interface TableBodyProps {
   table: Currency[]
   rate: number
   showHistoryDialog: (currency: Currency) => void
+  selectedCurrency: Currency
 }
 
 interface MainCurSelectorProps {
@@ -155,7 +156,7 @@ function TableHead({ clickHandlers, sortBy, sortType }: TableHeadProps) {
     )
 }
 
-function TableBody({ table, rate, showHistoryDialog }: TableBodyProps) {
+function TableBody({ table, rate, showHistoryDialog, selectedCurrency }: TableBodyProps) {
     return (
         <tbody>
             {
@@ -165,13 +166,16 @@ function TableBody({ table, rate, showHistoryDialog }: TableBodyProps) {
                             <TextImage 
                                 src={currency.imageSrc} 
                                 alt={`${currency.code.toLowerCase()}.png`} 
-                                text={currency.code}
+                                text={`${currency.code} x 1`}
                                 className={{image: 'me-2'}}
                             />
                         </td>
-                        <td className='col-3 align-middle border border-3 border-top-0'>{currency.name}</td>
-                        <td className={`${styles.borders} col-2 align-middle border border-3`}>
+                        <td className='col-3 align-middle border border-3 border-top-0 text-capitalize'>{currency.name}</td>
+                        {/* <td className={`${styles.borders} col-2 align-middle border border-3`}>
                             <span>{(calculateRate(BASE_CURRENCY, currency) / rate).toFixed(6)} {currency.code}</span>
+                        </td> */}
+                        <td className={`${styles.borders} col-2 align-middle border border-3`}>
+                            <span>{(currency.rate * rate).toFixed(6)} {selectedCurrency.code}</span>
                         </td>
                         <td className={`${styles.borders} col-2 align-middle border border-3`}>
                             <button 
@@ -235,6 +239,7 @@ function Table({ curTable, selectedCur, showHistoryDialog  }: TableProps) {
                         .filter((value) => value.code != selectedCur.code)} 
                     rate={rate}
                     showHistoryDialog={showHistoryDialog}
+                    selectedCurrency={selectedCur}
                 />
             </table>
         </div>

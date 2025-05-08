@@ -1,6 +1,6 @@
 import styles from './amount-input.module.scss';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import IconButton from '../../reusable/icon-button/icon-button';
 
 export interface AmountInputProps {
@@ -44,23 +44,26 @@ export function AmountInput({ value , min = undefined, onChange }: AmountInputPr
       <div className={`${styles.holder} d-inline-flex w-100 `}>
         <input 
           type='number' 
-          className={`${styles.input} form-control form-control-lg`}
+          className={`${styles.input} form-control`}
           min={min} 
           value={value} 
           ref={inputRef}
           onChange={(e) => onChange(e.target.value)}
         />
         <div className={`${styles.buttonsHolder}`}>
-          <IconButton 
-            icon={faCaretUp} 
-            className={`${styles.incrementButton}`} 
-            onClick={handleIncrement} 
-          />
-          <IconButton 
-            icon={faCaretDown} 
-            className={`${styles.decrementButton}`}
-            onClick={handleDecrement}
-          />
+          <div className={`${styles.buttonsInnerHolder}`}>
+            <IconButton 
+              icon={faCaretUp} 
+              className={`${styles.incrementButton}`} 
+              onClick={handleIncrement}
+              
+            />
+            <IconButton 
+              icon={faCaretDown} 
+              className={`${styles.decrementButton}`}
+              onClick={handleDecrement}
+            />
+          </div>
         </div>
       </div>
   )

@@ -23,13 +23,14 @@ const selectStyles: StylesConfig<Currency> = {
   menuList: (styles) => ({
     ...styles,
     backgroundColor: '#2B2B2B',
-    maxHeight: '15rem'
+    maxHeight: '15rem',
+    
   }),
   control: (styles) => ({
     ...styles,
     borderRadius: '50rem',
     fontSize: '1.4rem',
-    minHeight: 'calc(1.5em + 1rem + calc(1px * 2))',
+    height: '5rem',
     paddingLeft: '0.25rem',
     backgroundColor: '#2B2B2B',
     borderColor: '#2B2B2B',
