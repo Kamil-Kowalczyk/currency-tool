@@ -137,17 +137,17 @@ function TableHead({ clickHandlers, sortBy, sortType }: TableHeadProps) {
             <tr className={`text-center ${styles.tableRow}`}>
                 <TableHeadCol 
                     className={byCodeClassName}
-                    content='Kod'
+                    content='Code'
                     handleClick={clickHandlers.byCode}
                 />
                 <TableHeadCol
                     className={byNameClassName}
-                    content='Waluta'
+                    content='Currency'
                     handleClick={clickHandlers.byName}
                 />
                 <TableHeadCol 
                     className={byRateClassName}
-                    content='Średni kurs'
+                    content='Mid exchange rate'
                     colSpan={2}
                     handleClick={clickHandlers.byRate}
                 />
@@ -171,9 +171,6 @@ function TableBody({ table, rate, showHistoryDialog, selectedCurrency }: TableBo
                             />
                         </td>
                         <td className='col-3 align-middle border border-3 border-top-0 text-capitalize'>{currency.name}</td>
-                        {/* <td className={`${styles.borders} col-2 align-middle border border-3`}>
-                            <span>{(calculateRate(BASE_CURRENCY, currency) / rate).toFixed(6)} {currency.code}</span>
-                        </td> */}
                         <td className={`${styles.borders} col-2 align-middle border border-3`}>
                             <span>{(currency.rate * rate).toFixed(6)} {selectedCurrency.code}</span>
                         </td>
@@ -182,7 +179,7 @@ function TableBody({ table, rate, showHistoryDialog, selectedCurrency }: TableBo
                                 className={`btn ${styles.yellowBg} pt-2 pb-2`}
                                 onClick={() => showHistoryDialog(currency)}
                             >
-                                Historia kursów
+                                Exchange rate history
                             </button>
                         </td>
                     </tr>
@@ -249,7 +246,7 @@ function Table({ curTable, selectedCur, showHistoryDialog  }: TableProps) {
 function MainCurSelector({ curTable, value, onChange }: MainCurSelectorProps) {
     return (
         <div className='mt-2 mb-4 row'>
-            <h5 className='text-center mb-4'>Wybierz walutę, dla której będą wyświetlane odpowiadające jej kursy</h5>
+            <h5 className='text-center mb-4'>Choose the base currency</h5>
             <CurrencySelect 
                 options={curTable} 
                 value={value} 
@@ -261,7 +258,7 @@ function MainCurSelector({ curTable, value, onChange }: MainCurSelectorProps) {
 }
 
 function Header() {
-    return <h2 className='text-center m-4'>Kursy walut</h2>;
+    return <h2 className='text-center m-4'>Currency exchange rates</h2>;
 }
 
 export function Rates() {
@@ -304,7 +301,7 @@ export function Rates() {
                         
                     </div>
                 ) : (
-                    <p className='text-center'>Ładawanie danych, proszę czekać...</p>
+                    <p className='text-center'>Loading the data, please wait...</p>
                 )
             }
         </div>

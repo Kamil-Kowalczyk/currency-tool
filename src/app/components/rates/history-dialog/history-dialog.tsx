@@ -36,7 +36,7 @@ interface ChartProps {
 
 function Chart({rates, baseCur} : ChartProps) {
   const series: ApexAxisChartSeries = [{
-    name: "Cena",
+    name: "Price",
     data: rates.map(rate => rate.rate),
   }]
   const options: ApexOptions = {
@@ -124,7 +124,7 @@ function Dialog({initialCur, targetCur, handleClose} : DialogProps) {
         <h2 className='w-100'>
           
           <div className='d-inline-flex'>
-            <div className='my-auto me-2'>Kurs dla pary: </div>
+            <div className='my-auto me-2'>Exchange rates for pair: </div>
               <TextImage
                 src={initialCur.imageSrc}
                 alt={`${initialCur.code.toLowerCase()}.png`}
@@ -153,41 +153,41 @@ function Dialog({initialCur, targetCur, handleClose} : DialogProps) {
                 rates.length > 0 ? (
                   <Chart rates={rates} baseCur={initialCur}/>
                 ) : (
-                 <h3>Ładawanie danych...</h3>
+                 <h3>Loading the data, please wait...</h3>
                 )
               }
             </div>
             <div className='col-4'>
-                <h3 className='text-center mb-4'>Okres:</h3>
+                <h3 className='text-center mb-4'>Period:</h3>
                 <div className='w-100 text-center'>
                   <PeriodButton 
                     selected={period == '1w'} 
-                    content='1 Tydzień' 
+                    content='1 week' 
                     handleClick={() => setPeriod('1w')} 
                   />
                   <PeriodButton 
                     selected={period == '2w'}
-                    content='2 Tygodnie' 
+                    content='2 weeks' 
                     handleClick={() => setPeriod('2w')} 
                   />
                   <PeriodButton 
                     selected={period == '1m'}
-                    content='1 Miesiąc' 
+                    content='1 month' 
                     handleClick={() => setPeriod('1m')} 
                   />
                   <PeriodButton 
                     selected={period == '3m'}
-                    content='3 Miesiące'
+                    content='3 months'
                     handleClick={() => setPeriod('3m')} 
                   />
                   <PeriodButton 
                       selected={period == '6m'}
-                    content='6 Miesięcy'
+                    content='6 months'
                     handleClick={() => setPeriod('6m')} 
                   />
                   <PeriodButton 
                     selected={period == '1y'}
-                    content='1 Rok' 
+                    content='1 year' 
                     handleClick={() => setPeriod('1y')} 
                   />
                 </div>

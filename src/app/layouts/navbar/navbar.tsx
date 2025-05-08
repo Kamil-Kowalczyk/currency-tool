@@ -14,7 +14,7 @@ export function Navbar() {
               <img className={`${styles.logo}`} src='/currency_tool.ico'/>
             </div>
             <div>
-              Narzędzie walutowe
+              Currency Tool
             </div>
             
           </a>
@@ -22,17 +22,17 @@ export function Navbar() {
             <ul className='navbar-nav' >
               <NavItem 
                 path={'/'} 
-                title={'Strona główna'} 
+                title={'Home'} 
                 isCurrentPage={location.pathname === '/' ? true : false}
               />
               <NavItem 
                 path={'/exchange-rates'}
-                title={'Kursy walut'} 
+                title={'Exchange Rates'} 
                 isCurrentPage={location.pathname === '/exchange-rates' ? true : false}
               />
               <NavItem 
                 path={'/calculator'}
-                title={'Kalkulator'} 
+                title={'Calculator'} 
                 isCurrentPage={location.pathname === '/calculator' ? true : false}
               />
             </ul>

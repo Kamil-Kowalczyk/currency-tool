@@ -4,7 +4,7 @@ export function Footer() {
   return (
     <div className={`container-fluid mt-5 pt-3 ${styles.holder}`}>
       <div className='container'>
-        <h6 className='text-start' >Stworzone przez: Kamil-Kowalczyk</h6>
+        <h6 className='text-start' >Created by: Kamil-Kowalczyk</h6>
       </div>
     </div>
   )

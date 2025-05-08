@@ -101,7 +101,7 @@ export function Calculator() {
         <div className={`container ${styles.holder}`}>
             <div className={`container ${styles.calcContainer} col-xl-6 col-lg-7 col-md-10 col-sm-12 rounded-5 mt-5 d-flex flex-column`}>
                 <div className='row'>
-                    <h2 className="text-center mt-4">Kalkulator</h2>
+                    <h2 className="text-center mt-4">Calculator</h2>
                 </div>
                 <div className="row flex-grow-1">
                     <div className="col my-auto mx-auto">
@@ -109,7 +109,7 @@ export function Calculator() {
                             currencyTable.length > 0 ? (
                                 <CalculatorForm currencyTable={currencyTable} />
                             ) : (
-                                <p className="text-center">Ładowanie danych, proszę czekać...</p>
+                                <p className="text-center">Loading the data, please wait...</p>
                             )
                         }
                     </div>
