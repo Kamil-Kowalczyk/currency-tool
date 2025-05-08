@@ -51,7 +51,8 @@ function CalculatorForm({ currencyTable } : CalculatorFormProps) {
                         className='w-100'
                         onChange={option => {
                             setFirstCur(option ? option : BASE_CURRENCY)
-                            setHasFirtsChanged(true);
+                            setHasFirtsChanged(false);
+                            setAmount(secondAmount)
                         }}
                     />
                 </div>
@@ -62,7 +63,8 @@ function CalculatorForm({ currencyTable } : CalculatorFormProps) {
                         className='w-100'
                         onChange={option => {
                             setSecondCur(option ? option : BASE_CURRENCY)
-                            setHasFirtsChanged(false);
+                            setHasFirtsChanged(true);
+                            setAmount(firstAmount)
                         }}
                     />
                 </div>
